@@ -2,7 +2,7 @@ import cv2
 
 camera = cv2.VideoCapture(0)
 
-face_cascade = cv2.CascadeClassifier("haarcascade_fontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("data/haarcascade_fontalface_default.xml")
 
 
 def start_fr():
@@ -15,7 +15,7 @@ def start_fr():
 
         for x, y, width, height in faces:
             cv2.rectangle(img, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=3)
-            print('Распознано: физическое лицо')
+            print('Распознано: человеческое лицо')
 
         cv2.imshow("image", img)
 
@@ -25,3 +25,5 @@ def start_fr():
     camera.release()
     cv2.destroyAllWindows()
 
+
+# start_fr()

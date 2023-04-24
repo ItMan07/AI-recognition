@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 
-# import voiceAssistant as va
+# import assistant.voiceAssistant as va
 
 camera = cv2.VideoCapture(0)
 mpHands = mp.solutions.hands
@@ -62,3 +62,5 @@ def start_hr():
             break
     camera.release()
     cv2.destroyAllWindows()
+
+# start_hr()

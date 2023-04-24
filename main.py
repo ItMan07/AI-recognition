@@ -8,9 +8,9 @@ from PyQt5.QtSerialPort import QSerialPortInfo, QSerialPort
 from PyQt5.QtWidgets import QMessageBox
 
 # import voiceAssistant as va
-import hands_recognition as hr
-import haar_cascade_recognition as fr
 
+import recognition.hands_recognition as hr
+import recognition.haar_cascade_recognition as fr
 # ======================================= НАСТРОЙКИ =====================================
 
 
@@ -21,7 +21,7 @@ ui.setWindowTitle("AI UI")
 flagBtnLed = False
 
 serial = QSerialPort()
-serial.setBaudRate(115200)
+serial.setBaudRate(9600)
 portList = []
 
 strON = "🟢 Включено"
