@@ -4,7 +4,7 @@ import openai
 
 # translator = Translator()
 
-API_KEY = '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'
+API_KEY = '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'
 MODEL = 'text-davinci-003'
 # MODEL = 'text-curie-001'
 # MODEL = 'gpt-3.5-turbo-0301'

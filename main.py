@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 import recognition.hands_recognition as hr
 import recognition.haar_cascade_recognition as fr
+
 # ======================================= НАСТРОЙКИ =====================================
 
 
