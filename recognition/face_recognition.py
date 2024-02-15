@@ -3,12 +3,12 @@ import cv2
 
 class AiFace:
     def __init__(
-        self,
-        camera_frame_width: int = 1280,
-        camera_frame_height: int = 720,
-        flip_code: int = None,
-        camera_id: int = 0,
-        window_title: str = "Распознавание лиц",
+            self,
+            camera_frame_width: int = 1280,
+            camera_frame_height: int = 720,
+            flip_code: int = None,
+            camera_id: int = 0,
+            window_title: str = "Распознавание лиц",
     ):
         # self.face_cascade = cv2.CascadeClassifier("haarcascade_fontalface_default.xml")
         self.face_cascade = cv2.CascadeClassifier(
@@ -50,3 +50,19 @@ class AiFace:
 
         self.camera.release()
         cv2.destroyAllWindows()
+
+    def image_recognize(self, img_path):
+        img = cv2.imread(img_path)
+
+        image_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = self.face_cascade.detectMultiScale(image_gray, 1.3, 5)
+
+        for x, y, width, height in faces:
+            cv2.rectangle(
+                img, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=3
+            )
+
+        cv2.imshow("image", img)
+        while True:
+            if cv2.waitKey(1) == 27:
+                break
