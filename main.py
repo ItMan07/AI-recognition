@@ -9,3 +9,4 @@ ai = AiFace(
 
 if __name__ == "__main__":
     ai.processing()
+    # ai.image_recognize("image.png")
