@@ -3,12 +3,12 @@ import cv2
 
 class AiFace:
     def __init__(
-            self,
-            camera_frame_width: int = 1280,
-            camera_frame_height: int = 720,
-            flip_code: int = None,
-            camera_id: int = 0,
-            window_title: str = "Распознавание лиц",
+        self,
+        camera_frame_width: int = 1280,
+        camera_frame_height: int = 720,
+        flip_code: int = None,
+        camera_id: int = 0,
+        window_title: str = "Распознавание лиц",
     ):
         # self.face_cascade = cv2.CascadeClassifier("haarcascade_fontalface_default.xml")
         self.face_cascade = cv2.CascadeClassifier(
