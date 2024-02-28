@@ -9,7 +9,8 @@ camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 import mediapipe as mp
 from mediapipe.framework.formats import landmark_pb2
 
-model_path = "people/pose_landmarker_full.task"
+# model_path = "people/pose_landmarker_full.task"
+model_path = "pose_landmarker_full.task"
 
 BaseOptions = mp.tasks.BaseOptions
 PoseLandmarker = mp.tasks.vision.PoseLandmarker
@@ -94,3 +95,8 @@ def people_recognition():
 
         camera.release()
         cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    model_path = "pose_landmarker_full.task"
+    people_recognition()
