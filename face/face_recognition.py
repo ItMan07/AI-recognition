@@ -76,3 +76,13 @@ class AiFace:
         while True:
             if cv2.waitKey(1) == 27:
                 break
+
+
+if __name__ == "__main__":
+    ai = AiFace(
+        camera_frame_width=1280,
+        camera_frame_height=720,
+        flip_code=None,
+        camera_id=0,
+    )
+    ai.processing()
