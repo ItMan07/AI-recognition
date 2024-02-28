@@ -41,6 +41,7 @@ class AiRecognition:
             num_poses=10,
         )
 
+    @staticmethod
     def draw_landmarks_on_image(rgb_image, detection_result):
         pose_landmarks_list = detection_result.pose_landmarks
         annotated_image = np.copy(rgb_image)
@@ -85,7 +86,7 @@ class AiRecognition:
         img = cv2.putText(
             img,
             str(len(faces)),
-            (100, 100),
+            (100, 200),
             cv2.FONT_HERSHEY_SIMPLEX,
             3,
             (0, 0, 255),
@@ -132,23 +133,53 @@ class AiRecognition:
         Получение изображения с камеры и последующая обработка
         :return: None
         """
-        while True:
-            success_code, img = self.camera.read()
+        with self.PoseLandmarker.create_from_options(self.options) as landmarker:
+            while self.camera.isOpened():
+                success_code, img_bgr = self.camera.read()
 
-            if self.flip_code is not None:
-                img = cv2.flip(img, self.flip_code)
+                if self.flip_code is not None:
+                    img_bgr = cv2.flip(img_bgr, self.flip_code)
 
-            if not success_code:
-                cv2.waitKey()
-                print("Ошибка получения изображения с камеры")
-                break
+                if not success_code:
+                    cv2.waitKey()
+                    print("Ошибка получения изображения с камеры")
+                    break
 
-            img = self.face_recognition(img)
-            img = self.human_recognition(img)
+                # img_bgr = self.face_recognition(img_bgr)
+                # img_bgr = self.human_recognition(img_bgr)
 
-            cv2.imshow("Изображение с камеры", img)
-            if cv2.waitKey(1) == 27:
-                break
+                image_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
+                faces = self.face_cascade.detectMultiScale(image_gray, 1.3, 5)
+                for x, y, width, height in faces:
+                    cv2.rectangle(
+                        img_bgr, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=3
+                    )
+
+                image_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+                mp_image_rgb = mp.Image(image_format=mp.ImageFormat.SRGB, data=image_rgb)
+                timestamps = self.camera.get(cv2.CAP_PROP_POS_MSEC)
+                pose_landmarker_result = landmarker.detect_for_video(
+                    mp_image_rgb, int(timestamps)
+                )
+                annotated_image_rgb = self.draw_landmarks_on_image(
+                    mp_image_rgb.numpy_view(), pose_landmarker_result
+                )
+
+                num_of_faces = len(faces)
+                num_of_people = len(pose_landmarker_result.pose_landmarks)
+                img_bgr = cv2.cvtColor(annotated_image_rgb, cv2.COLOR_RGB2BGR)
+                img_bgr = cv2.putText(
+                    img_bgr,
+                    f"People: {num_of_people} | Faces: {num_of_faces}",
+                    (int(self.cam_height * 0.05), int(self.cam_width * 0.05)),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1.5,
+                    (0, 0, 250),
+                    4,
+                )
+                cv2.imshow("Изображение с камеры", img_bgr)
+                if cv2.waitKey(1) == 27:
+                    break
 
         self.camera.release()
         cv2.destroyAllWindows()
