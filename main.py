@@ -1,7 +1,6 @@
-import people.people_recognition
-from face.face_recognition import AiFace
+from recognition import ai_recognition
 
-ai = AiFace(
+ai = ai_recognition.AiRecognition(
     camera_frame_width=1280,
     camera_frame_height=720,
     flip_code=None,
@@ -9,6 +8,4 @@ ai = AiFace(
 )
 
 if __name__ == "__main__":
-    ai.processing()
-    ai.image_recognize("image.png")
-    # people.people_recognition.people_recognition()
+    ai.camera_processing()
