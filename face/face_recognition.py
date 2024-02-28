@@ -44,6 +44,16 @@ class AiFace:
                     img, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=3
                 )
 
+            img = cv2.putText(
+                img,
+                str(len(faces)),
+                (100, 100),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                3,
+                (0, 0, 255),
+                4,
+            )
+
             cv2.imshow("image", img)
             if cv2.waitKey(1) == 27:
                 break
